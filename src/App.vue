@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 body {
     margin: 0;
     padding: 0;
@@ -97,5 +98,5 @@ body {
 ::-webkit-scrollbar-track:horizontal {
   background-color: #fff;
 }
-
+@import './styles/elementResize.css';
 </style>

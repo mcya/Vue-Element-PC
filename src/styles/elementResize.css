@@ -1,0 +1,32 @@
+/* element ui 重写覆盖 */
+.el-dialog {
+  position: relative;
+  margin: 0 auto 50px;
+  border-radius: 5px!important;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.el-dialog__header {
+  padding: 20px 20px 10px;
+  background-color: #c70025;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.el-dialog .el-dialog__title {
+  line-height: 24px;
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.el-dialog .el-dialog__headerbtn:hover .el-dialog__close {
+  color: #000000;
+}
+
+.el-dialog .el-dialog__headerbtn .el-dialog__close {
+  color: #ffffff;
+}

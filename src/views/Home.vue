@@ -9,7 +9,7 @@
       <!-- <div class="tools" @click.prevent="collapse">
         <i class="fa fa-align-justify"></i>
       </div> -->
-      <a class="home-tree" href="javascript:;">中华人民共和国</a>
+      <a class="home-tree" href="javascript:;" @click="companyOpenAction">{{projectInfo.companyName}}</a>
       <a class="home-tree" href="javascript:;">你最牛</a>
     </el-col>
     <el-col :span="4" class="userinfo">
@@ -75,13 +75,21 @@
       </div>
     </section>
   </el-col>
+  <dialog-company :dialogVisible='dialogVisibleCompany' v-on:closeDialog="closeDialogCompany()" v-on:handleNodeClick="handleNodeClick"></dialog-company>
 </el-row>
 </template>
 
 <script>
+import DialogCompany from '../components/dialogCompany.vue'
 export default {
+  components: { DialogCompany },
   data() {
     return {
+      projectInfo: {
+        companyName: '请选择公司',
+        companyId: '',
+      },
+      dialogVisibleCompany: false,
       sysName: 'POS后台管理系统',
       collapsed: false,
       sysUserName: '',
@@ -98,10 +106,32 @@ export default {
       }
     }
   },
+  mounted() {
+    var user = sessionStorage.getItem('user');
+    if (user) {
+      user = JSON.parse(user);
+      this.sysUserName = 'mcya';
+      this.sysUserAvatar = '../assets/user.png'; //头像
+    }
+
+    this.getOrginData();
+
+  },
   methods: {
+    handleNodeClick(item) {
+      this.projectInfo.companyName = item.orgname;
+      this.projectInfo.companyId = item.orgid;
+      this.closeDialogCompany();
+    },
+    closeDialogCompany() {
+      this.dialogVisibleCompany = false;
+    },
+    companyOpenAction() {
+      this.dialogVisibleCompany = true;
+    },
     getOrginData() {
       this.$http.post(this.HOST + "/PC/InitORGTreeByUser.do", {
-        // 
+        //
       }, {
         emulateJSON: true
       }).then(function(response) {})
@@ -137,17 +167,6 @@ export default {
     showMenu(i, status) {
       this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
     }
-  },
-  mounted() {
-    var user = sessionStorage.getItem('user');
-    if (user) {
-      user = JSON.parse(user);
-      this.sysUserName = 'mcya';
-      this.sysUserAvatar = '../assets/user.png'; //头像
-    }
-
-    this.getOrginData();
-
   }
 }
 </script>
